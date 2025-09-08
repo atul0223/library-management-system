@@ -6,7 +6,7 @@ import bookRoutes from "./routes/book.route"
 const app: express.Application = express();
 app.use(
   cors({
-    origin: "https://library-management-system-theta-olive.vercel.app",
+    origin:"*",
     credentials: true,
   })
 );
