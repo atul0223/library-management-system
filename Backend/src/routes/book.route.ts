@@ -22,9 +22,9 @@ router.get("/", getAvailableBooks);
 router.get("/search", searchBooks);
 
 // Borrow a book
-router.put("/:id/borrow", verifyUser, borrowBook);
+router.put("/borrow", verifyUser, borrowBook);
 
 // Return a book
-router.put("/:id/return", verifyUser, returnBook);
+router.put("/return", verifyUser, returnBook);
 
 export default router;

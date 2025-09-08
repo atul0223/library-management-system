@@ -14,7 +14,7 @@ export const addBook = async (req: Request, res: Response) => {
 
 // Fetch all available books
 export const getAvailableBooks = async (_req: Request, res: Response) => {
-  const books = await Book.find({ available: true });
+  const books = await Book.find();
   res.status(200).json({ books });
 };
 
@@ -30,12 +30,13 @@ export const searchBooks = async (req: Request, res: Response) => {
 
 // Borrow a book
 export const borrowBook = async (req: any, res: Response) => {
-  const book = await Book.findById(req.params.id);
+  const book = await Book.findById(req.body.id);
   if (!book || !book.available) {
     return res.status(400).json({ message: "Book not available" });
   }
 
-  const user = await User.findById(req.user.userId);
+
+  const user = await User.findById(req.user._id);
   if (!user) return res.status(404).json({ message: "User not found" });
 
   book.available = false;
@@ -49,10 +50,10 @@ export const borrowBook = async (req: any, res: Response) => {
 
 // Return a book
 export const returnBook = async (req: any, res: Response) => {
-  const book = await Book.findById(req.params.id);
+  const book = await Book.findById(req.body.id);
   if (!book) return res.status(404).json({ message: "Book not found" });
 
-  const user = await User.findById(req.user.userId);
+  const user = await User.findById(req.user._id);
   if (!user) return res.status(404).json({ message: "User not found" });
 
   const index = user.issuedBooks.indexOf(book._id);

@@ -63,7 +63,7 @@ const verifyOtp = async (req:any, res:any) => {
     .status(200).json({ message: "OTP verified successfully" });
 }
  const getUser = async (req: any, res: any) => {
-  const user = await User.findById(req.user.userId).populate("issuedBooks");
+  const user = await User.findById(req.user._id).populate("issuedBooks");
   if (!user) return res.status(404).json({ message: "User not found" });
 
   res.status(200).json({
